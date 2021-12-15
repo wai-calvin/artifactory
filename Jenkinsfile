@@ -1,13 +1,12 @@
-node {
-    stage('Close Repository') {
-        checkout scm
+pipeline {
+    agent {
+        dockerfile true
     }
-
-    stage('Build Image') {
-        docker.build("jenkins/jenkins:1.0.0")
-    }
-    
-    stage('Check local images') P{
-        sh 'docker image ls'
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t artifactory/artifactory:0.0.5 .'
+            }
+        }
     }
 }
